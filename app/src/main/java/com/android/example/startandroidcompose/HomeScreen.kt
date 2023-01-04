@@ -9,50 +9,51 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-const val TAG = "TEST INFO"
+const val TAG = "TEST_INFO"
 
 @Composable
-fun HomeScreen(
+fun ClickCounter(
+    uppercase: State<Boolean>,
     counter: State<Int>,
-    onCounterClick: () -> Unit
+    onCounterClick: () -> Unit,
+    onCheckedChange: (Boolean) -> Unit
 ) {
+    val evenOdd = remember(uppercase) { EvenOdd(uppercase.value) }
     val counterValue = counter.value
-    Log.d(TAG, "HomeScreen")
-    Column {
-        Counter(counter = counterValue, onCounterClick)
-        InfoText(text = if (counterValue < 3) "More" else "Enough")
+    Column (modifier = Modifier.padding(16.dp)) {
+        Text(
+            text = "Clicks: ${counter.value} ${evenOdd.check(counter.value)}",
+            modifier = Modifier.clickable(onClick = onCounterClick),
+        )
+        Log.d(TAG, "ClickCounter ${counter.value} ${evenOdd.hashCode()}")
+
+        Row(verticalAlignment = CenterVertically) {
+            Checkbox(checked = uppercase.value, onCheckedChange = onCheckedChange)
+            Text(text = "Uppercase", fontSize = 18.sp)
+        }
+
+    }
+    Log.d(TAG, "ClickCounter(counter = $counterValue, uppercase = $uppercase), $evenOdd")
+}
+
+class EvenOdd(private val uppercase: Boolean) {
+    fun check(count: Int): String {
+        var result = if (count % 2 == 0) "even" else "odd"
+
+        if (uppercase) result = result.uppercase()
+        return result
     }
 
+    override fun toString(): String {
+        return "EvenOdd(uppercase = $uppercase, hashcode = ${hashCode()})"
+    }
 }
-
-@Composable
-private fun Counter(
-    counter: Int,
-    onCounterClick: () -> Unit
-) {
-    Log.d(TAG, "ClickCounter $counter")
-    Text(
-        text = "Clicks: $counter",
-        modifier = Modifier.clickable{
-            Log.d(TAG, "--- click ---")
-            onCounterClick()
-        }
-    )
-}
-
-@Composable
-fun InfoText(text: String) {
-    Log.d(TAG, "InfoText $text")
-    Text(text = text, fontSize = 18.sp)
-}
-
-
-//@Preview(showBackground = true)
-//@Composable
-//fun HomeScreenPreview() {
-//    HomeScreen()
-//}

@@ -17,9 +17,17 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val counter = mutableStateOf(0)
+        val uppercase = mutableStateOf(false)
+
         setContent {
-            HomeScreen(counter = counter,
-            onCounterClick = {counter.value++ })
+            ClickCounter(
+                uppercase = uppercase,
+                counter = counter,
+                onCounterClick = {counter.value++},
+                onCheckedChange = {
+                    uppercase.value = it
+                }
+            )
         }
     }
 }
