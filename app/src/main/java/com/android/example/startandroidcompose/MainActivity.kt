@@ -16,23 +16,10 @@ import com.android.example.startandroidcompose.ui.theme.StartAndroidComposeTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val checked = mutableStateOf(false)
-        val text = mutableStateOf("text")
+        val counter = mutableStateOf(0)
         setContent {
-//            HomeScreen(
-//                checked = checked,
-//                onCheckedChange = { newValue ->
-//                    checked.value = newValue
-//                }
-//            )
-
-            HomeScreen1(
-                text = text,
-                onValueChange = { newValue ->
-                    text.value = newValue
-
-                }
-            )
+            HomeScreen(counter = counter,
+            onCounterClick = {counter.value++ })
         }
     }
 }
