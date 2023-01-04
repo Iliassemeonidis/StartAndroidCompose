@@ -16,18 +16,8 @@ import com.android.example.startandroidcompose.ui.theme.StartAndroidComposeTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val counter = mutableStateOf(0)
-        val uppercase = mutableStateOf(false)
-
         setContent {
-            ClickCounter(
-                uppercase = uppercase,
-                counter = counter,
-                onCounterClick = {counter.value++},
-                onCheckedChange = {
-                    uppercase.value = it
-                }
-            )
+            ClickCounter()
         }
     }
 }
