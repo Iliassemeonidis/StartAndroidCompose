@@ -24,9 +24,20 @@ const val TAG = "TEST_INFO"
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
     val uiState by homeViewModel.uiState.collectAsState()
+
+    HomeScreen1(uiState, homeViewModel::onCounterClick, homeViewModel::setEnabled)
+}
+
+
+@Composable
+fun HomeScreen1(
+    uiState: HomeScreenUiState,
+    onCounterClick: () -> Unit,
+    onCheckedChange: (Boolean) -> Unit
+) {
     Column {
-        ClickCounter(counter = uiState.count, onCounterClick = homeViewModel::onCounterClick)
-        EnableFeature(enabled = uiState.enabled, onCheckedChange = homeViewModel::setEnabled)
+        ClickCounter(counter = uiState.count, onCounterClick = onCounterClick)
+        EnableFeature(enabled = uiState.enabled, onCheckedChange = onCheckedChange)
     }
 
 }
@@ -59,9 +70,14 @@ fun ClickCounterPreview() {
     ClickCounter(5, onCounterClick = {})
 }
 
-@Preview(showBackground = true)
+
+@Preview(showSystemUi = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen1(
+        uiState = HomeScreenUiState(count = 5, enabled = true),
+        onCounterClick = {},
+        onCheckedChange = {}
+    )
 }
 
