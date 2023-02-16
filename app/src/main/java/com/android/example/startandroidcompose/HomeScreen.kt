@@ -22,62 +22,18 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 const val TAG = "TEST_INFO"
 
 @Composable
-fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
-    val uiState by homeViewModel.uiState.collectAsState()
-
-    HomeScreen1(uiState, homeViewModel::onCounterClick, homeViewModel::setEnabled)
+fun HomeScreen1() {
+Text(text = "HomeScreen1")
 }
 
 
 @Composable
-fun HomeScreen1(
-    uiState: HomeScreenUiState,
-    onCounterClick: () -> Unit,
-    onCheckedChange: (Boolean) -> Unit
-) {
-    Column {
-        ClickCounter(counter = uiState.count, onCounterClick = onCounterClick)
-        EnableFeature(enabled = uiState.enabled, onCheckedChange = onCheckedChange)
-    }
+fun HomeScreen2() {
+    Text(text = "HomeScreen2")
 
 }
-
 @Composable
-private fun ClickCounter(counter: Int, onCounterClick: () -> Unit) {
-    Text(
-        text = "Clicks: $counter",
-        modifier = Modifier
-            .clickable(onClick = onCounterClick)
-    )
-}
-
-@Composable
-fun EnableFeature(
-    enabled: Boolean,
-    onCheckedChange: (Boolean) -> Unit
-) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Checkbox(checked = enabled, onCheckedChange = onCheckedChange)
-        Text("enable feature")
-    }
+fun HomeScreen3() {
+    Text(text = "HomeScreen3")
 
 }
-
-
-@Preview(showBackground = true)
-@Composable
-fun ClickCounterPreview() {
-    ClickCounter(5, onCounterClick = {})
-}
-
-
-@Preview(showSystemUi = true)
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen1(
-        uiState = HomeScreenUiState(count = 5, enabled = true),
-        onCounterClick = {},
-        onCheckedChange = {}
-    )
-}
-
